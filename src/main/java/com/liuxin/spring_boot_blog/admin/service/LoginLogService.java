@@ -1,7 +1,7 @@
 package com.liuxin.spring_boot_blog.admin.service;
 
 import com.liuxin.spring_boot_blog.admin.entity.LoginLog;
-import com.liuxin.spring_boot_blog.common.controller.service.BaseService;
+import com.liuxin.spring_boot_blog.common.service.BaseService;
 
 import java.util.List;
 

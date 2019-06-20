@@ -29,82 +29,82 @@ import java.util.Date;
 @Controller
 @SuppressWarnings("all")
 public class LoginController extends BaseController {
-  @GetMapping("/admin")
-  /**
-   * 跳转到后台页面
-   */
-  public String admin(Model model) {
-    model.addAttribute(this.getCurrentUser());
-    return ("admin/index");
-  }
+    @GetMapping("/admin")
+    /**
+     * 跳转到后台页面
+     */
+    public String admin(Model model) {
+        model.addAttribute(this.getCurrentUser());
+        return ("admin/index");
+    }
 
-  /**
-   * 跳转到登录页
-   */
-  @GetMapping("/login")
-  public String login() {
-    return "admin/login";
-  }
+    /**
+     * 跳转到登录页
+     */
+    @GetMapping("/login")
+    public String login() {
+        return "admin/login";
+    }
 
-  @Autowired
-  private UserService userService;
-  @Autowired
-  private LoginLogService loginLogService;
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private LoginLogService loginLogService;
 
-  @ResponseBody
-  @RequestMapping("/admin/login")
-  public ResponseCode login(Model model,
-                            @RequestParam(value = "username", required = false) String username,
-                            @RequestParam(value = "password", required = false) String password,
-                            @RequestParam(value = "remember", required = false) String remember
-  ) {
-    if (username != null && password != null) {
+    @ResponseBody
+    @RequestMapping("/admin/login")
+    public ResponseCode login(Model model,
+                              @RequestParam(value = "username", required = false) String username,
+                              @RequestParam(value = "password", required = false) String password,
+                              @RequestParam(value = "remember", required = false) String remember
+    ) {
+        if (username != null && password != null) {
 
 //            得到Subject及创建用户名/密码身份验证Token（即用户身份/凭证）
-      Subject subject = getSubject();
-      UsernamePasswordToken token = new UsernamePasswordToken(username, password);
+            Subject subject = getSubject();
+            UsernamePasswordToken token = new UsernamePasswordToken(username, password);
 //            是否记住登录状态
-      if (remember != null) {
+            if (remember != null) {
 //                记住
-        token.setRememberMe(remember.equals(true));
+                token.setRememberMe(remember.equals(true));
 
-      } else {
-        token.setRememberMe(false);
-      }
-      try {
+            } else {
+                token.setRememberMe(false);
+            }
+            try {
 //                登入
-        subject.login(token);
+                subject.login(token);
 //        登陆日志
-        LoginLog log = new LoginLog();
-        HttpServletRequest request = HttpContextUtil.getHttpServletRequest();
+                LoginLog log = new LoginLog();
+                HttpServletRequest request = HttpContextUtil.getHttpServletRequest();
 //      通过工具类获取ip地址
-        String ip = IPUtil.getIpAddr(request);
-        log.setIp(ip);
+                String ip = IPUtil.getIpAddr(request);
+                log.setIp(ip);
 //        获取当前用户name
-        log.setUsername(super.getCurrentUser().getUsername());
+                log.setUsername(super.getCurrentUser().getUsername());
 //        通过IP定位的jar获取登录地址
-        log.setLocation(AddressUtil.getAddress(ip));
+                log.setLocation(AddressUtil.getAddress(ip));
 //        登录时间
-        log.setCreateTime(new Date());
+                log.setCreateTime(new Date());
 //        获取请求标识 UA
-        String header = request.getHeader("User-Agent");
-        UserAgent userAgent = UserAgent.parseUserAgentString(header);
+                String header = request.getHeader("User-Agent");
+                UserAgent userAgent = UserAgent.parseUserAgentString(header);
 //        浏览器类型
-        Browser browser = userAgent.getBrowser();
+                Browser browser = userAgent.getBrowser();
 //        系统
-        OperatingSystem operatingSystem = userAgent.getOperatingSystem();
-        log.setDevice(browser.getName() + " -- " + operatingSystem.getName());
-        loginLogService.saveLog(log);
-        model.addAttribute("username", getSubject().getPrincipal());
-        return ResponseCode.success();
+                OperatingSystem operatingSystem = userAgent.getOperatingSystem();
+                log.setDevice(browser.getName() + " -- " + operatingSystem.getName());
+                loginLogService.saveLog(log);
+                model.addAttribute("username", getSubject().getPrincipal());
+                return ResponseCode.success();
 
-      } catch (Exception e) {
-        e.printStackTrace();
-        throw new GlobalException(e.getMessage());
-      }
+            } catch (Exception e) {
+                e.printStackTrace();
+                throw new GlobalException(e.getMessage());
+            }
 
-    } else {
-      throw new GlobalException("用户名或密码错误");
+        } else {
+            throw new GlobalException("用户名或密码错误");
+        }
     }
-  }
 }

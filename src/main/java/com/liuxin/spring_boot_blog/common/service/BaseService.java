@@ -1,4 +1,4 @@
-package com.liuxin.spring_boot_blog.common.controller.service;
+package com.liuxin.spring_boot_blog.common.service;
 
 import java.util.List;
 

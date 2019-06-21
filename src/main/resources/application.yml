@@ -10,8 +10,8 @@ spring:
       #监控统计拦截的filters
       filter: stat
       #mysql驱动
-      #      driver-class-name: com.mysql.jdbc.Driver
-      driverClassName: com.mysql.cj.jdbc.Driver
+      driver-class-name: com.mysql.jdbc.Driver
+#      driverClassName: com.mysql.cj.jdbc.Driver
       #基本属性
       url: jdbc:mysql://127.0.0.1:3306/tumo?serverTimezone=UTC&allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&&useSSL=false
 

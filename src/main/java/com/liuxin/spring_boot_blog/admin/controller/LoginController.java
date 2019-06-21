@@ -64,20 +64,20 @@ public class LoginController extends BaseController {
     ) {
         if (username != null && password != null) {
 
-//      得到Subject及创建用户名/密码身份验证Token（即用户身份/凭证）
+            //得到Subject及创建用户名/密码身份验证Token（即用户身份/凭证）
             Subject subject = getSubject();
             UsernamePasswordToken token = new UsernamePasswordToken(username, password);
 
-//      是否记住登录状态
+            // 是否记住登录状态
             if (remember != null) {
-//          记住
+                //记住
                 token.setRememberMe(remember.equals(true));
 
             } else {
                 token.setRememberMe(false);
             }
             try {
-//          登入
+                //登入
                 try {
                     subject.login(token);
                 } catch (UnknownAccountException e) {
@@ -88,24 +88,24 @@ public class LoginController extends BaseController {
                     return new ResponseCode(StatusEnums.ACCOUNT_ERROR);
                 }
 
-//  登陆日志
+                //登陆日志
                 LoginLog log = new LoginLog();
                 HttpServletRequest request = HttpContextUtil.getHttpServletRequest();
-//通过工具类获取ip地址
+                //通过工具类获取ip地址
                 String ip = IPUtil.getIpAddr(request);
                 log.setIp(ip);
-//  获取当前用户name
+                //  获取当前用户name
                 log.setUsername(super.getCurrentUser().getUsername());
-//  通过IP定位的jar获取登录地址
+                //  通过IP定位的jar获取登录地址
                 log.setLocation(AddressUtil.getAddress(ip));
-//  登录时间
+                //  登录时间
                 log.setCreateTime(new Date());
-//  获取请求标识 UA
+                //  获取请求标识 UA
                 String header = request.getHeader("User-Agent");
                 UserAgent userAgent = UserAgent.parseUserAgentString(header);
-//  浏览器类型
+                //  浏览器类型
                 Browser browser = userAgent.getBrowser();
-//  系统
+                //  系统
                 OperatingSystem operatingSystem = userAgent.getOperatingSystem();
                 log.setDevice(browser.getName() + " -- " + operatingSystem.getName());
                 loginLogService.saveLog(log);

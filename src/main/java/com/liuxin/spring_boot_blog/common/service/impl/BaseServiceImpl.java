@@ -16,7 +16,7 @@ import java.util.List;
 
 public class BaseServiceImpl<T> implements BaseService<T> {
 
-//    @Autowired
+    @Autowired
     @Getter
     private Mapper<T> mapper;
 

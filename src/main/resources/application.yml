@@ -5,28 +5,28 @@ spring:
   datasource:
     name: springboot
     type: com.alibaba.druid.pool.DruidDataSource
-    #druidÏà¹ØÅäÖÃ
+    #druidç›¸å…³é…ç½®
     druid:
-      #¼à¿ØÍ³¼ÆÀ¹½ØµÄfilters
+      #ç›‘æ§ç»Ÿè®¡æ‹¦æˆªçš„filters
       filter: stat
-      #mysqlÇı¶¯
-      driver-class-name: com.mysql.cj.jdbc.Driver
-      #      driverClassName: com.mysql.cj.jdbc.Driver
-      #»ù±¾ÊôĞÔ
+      #mysqlé©±åŠ¨
+      #      driver-class-name: com.mysql.jdbc.Driver
+      driverClassName: com.mysql.cj.jdbc.Driver
+      #åŸºæœ¬å±æ€§
       url: jdbc:mysql://127.0.0.1:3306/tumo?serverTimezone=UTC&allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&&useSSL=false
 
       username: root
       password: liuxin
-      #ÅäÖÃ³õÊ¼»¯´óĞ¡/×îĞ¡/×î´ó
+      #é…ç½®åˆå§‹åŒ–å¤§å°/æœ€å°/æœ€å¤§
       initial-size: 1
       min-idle: 1
       max-active: 20
-      #»ñÈ¡Á¬½ÓµÈ´ı³¬Ê±Ê±¼ä
+      #è·å–è¿æ¥ç­‰å¾…è¶…æ—¶æ—¶é—´
       max-wait: 60000
-      #¼ä¸ô¶à¾Ã½øĞĞÒ»´Î¼ì²â£¬¼ì²âĞèÒª¹Ø±ÕµÄ¿ÕÏĞÁ¬½Ó
+      #é—´éš”å¤šä¹…è¿›è¡Œä¸€æ¬¡æ£€æµ‹ï¼Œæ£€æµ‹éœ€è¦å…³é—­çš„ç©ºé—²è¿æ¥
       time-between-eviction-runs-millis: 60000
 
-  #thymeleafÄ£°åÒıÇæ
+  #thymeleafæ¨¡æ¿å¼•æ“
   thymeleaf:
     prefix: classpath:/templates/
     check-template-location: true
@@ -35,36 +35,36 @@ spring:
     mode: LEGACYHTML5
     cache: false
 
-    #devtools²å¼ş
+    #devtoolsæ’ä»¶
   devtools:
     restart:
-      enabled: true #ÊÇ·ñÖ§³ÖÈÈ²¿Êğ
+      enabled: true #æ˜¯å¦æ”¯æŒçƒ­éƒ¨ç½²
 
-    #ÎÄ¼şÉÏ´«Ïà¹ØÉèÖÃ
+    #æ–‡ä»¶ä¸Šä¼ ç›¸å…³è®¾ç½®
   servlet:
     multipart:
       max-file-size: 10MB
       max-request-size: 100MB
 
-#mybatisÅäÖÃ
+#mybatisé…ç½®
 mybatis:
   mapper-locations: classpath:mapper/**/*.xml
-  type-aliases-package: com.liuxin.spring_boot_blog.admin.entity
+  type-aliases-package: com.liuxin.spring_boot_blog.entity
   configuration:
     map-underscore-to-camel-case: true
 
-#mybaatis·ÖÒ³²å¼şpagehelperÉèÖÃ
+#mybaatisåˆ†é¡µæ’ä»¶pagehelperè®¾ç½®
 pagehelper:
   pagehelperDialect: mysql
   reasonable: true
   support-methods-arguments: true
 
-# ´òÓ¡sql
+# æ‰“å°sql
 logging:
   level:
-    com.liuxin.spring_boot_blog.admin.mapper: DEBUG
+    com.liuxin.spring_boot_blog.mapper: DEBUG
 
-# ÆßÅ£ÔÆ
+# ä¸ƒç‰›äº‘
 qiniu:
   access_key: ACCESS_KEY
   secret_key: SECRET_KEY

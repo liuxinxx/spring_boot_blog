@@ -4,10 +4,13 @@ import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.Date;
-@Table(name = "tb_user")
+
 @Data
-public class User {
+@Table(name = "tb_user")
+public class User implements Serializable {
+
     @Id
     private Long id;
     @NotNull
@@ -18,13 +21,7 @@ public class User {
     private String avatar;
     private String introduce;
     private String remark;
-    //    创建时间
-    @Column(name = "created_time")
-    private Date createdTime;
 
-    //    更新时间
-    @Column(name = "updated_time")
-    private Date updatedTime;
     @Transient
     private String checkPass;
 }

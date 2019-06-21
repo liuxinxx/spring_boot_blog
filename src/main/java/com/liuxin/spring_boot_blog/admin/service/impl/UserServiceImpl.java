@@ -80,7 +80,12 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
         if (!username.isEmpty()) {
             User user = new User();
             user.setUsername(username);
-            return userMapper.select(user).get(0);
+            List<User> users = userMapper.select(user);
+            if (users.size() == 0) {
+                return null;
+            } else {
+                return users.get(0);
+            }
         } else {
             return new User();
         }

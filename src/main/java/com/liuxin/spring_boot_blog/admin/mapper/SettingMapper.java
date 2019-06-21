@@ -9,6 +9,5 @@ import org.apache.ibatis.annotations.Mapper;
  * @date 2019/6/20 11:41
  * @desc
  */
-@Mapper
 public interface SettingMapper extends MyMapper<Setting> {
 }

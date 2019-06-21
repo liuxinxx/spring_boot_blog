@@ -1,6 +1,9 @@
 package com.liuxin.spring_boot_blog.common.service;
 
+import org.springframework.stereotype.Service;
+
 import java.util.List;
+
 
 public interface BaseService<T> {
     List<T> selectAll();

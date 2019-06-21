@@ -2,6 +2,7 @@ package com.liuxin.spring_boot_blog.admin.controller;
 
 import com.liuxin.spring_boot_blog.admin.dto.ResponseCode;
 import com.liuxin.spring_boot_blog.admin.entity.LoginLog;
+import com.liuxin.spring_boot_blog.admin.enums.StatusEnums;
 import com.liuxin.spring_boot_blog.admin.exception.GlobalException;
 import com.liuxin.spring_boot_blog.admin.service.LoginLogService;
 import com.liuxin.spring_boot_blog.admin.service.UserService;
@@ -12,6 +13,8 @@ import com.liuxin.spring_boot_blog.common.controller.BaseController;
 import eu.bitwalker.useragentutils.Browser;
 import eu.bitwalker.useragentutils.OperatingSystem;
 import eu.bitwalker.useragentutils.UserAgent;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +30,8 @@ import java.util.Date;
 
 
 @Controller
-@SuppressWarnings("all")
+@Slf4j
+@SuppressWarnings("all") // 去掉警告
 public class LoginController extends BaseController {
     @GetMapping("/admin")
     /**
@@ -60,38 +64,48 @@ public class LoginController extends BaseController {
     ) {
         if (username != null && password != null) {
 
-//            得到Subject及创建用户名/密码身份验证Token（即用户身份/凭证）
+//      得到Subject及创建用户名/密码身份验证Token（即用户身份/凭证）
             Subject subject = getSubject();
             UsernamePasswordToken token = new UsernamePasswordToken(username, password);
-//            是否记住登录状态
+
+//      是否记住登录状态
             if (remember != null) {
-//                记住
+//          记住
                 token.setRememberMe(remember.equals(true));
 
             } else {
                 token.setRememberMe(false);
             }
             try {
-//                登入
-                subject.login(token);
-//        登陆日志
+//          登入
+                try {
+                    subject.login(token);
+                } catch (UnknownAccountException e) {
+                    log.info(e.getMessage());
+                    return new ResponseCode(StatusEnums.ACCOUNT_UNKNOWN);
+                } catch (Exception e) {
+                    log.info(e.getMessage());
+                    return new ResponseCode(StatusEnums.ACCOUNT_ERROR);
+                }
+
+//  登陆日志
                 LoginLog log = new LoginLog();
                 HttpServletRequest request = HttpContextUtil.getHttpServletRequest();
-//      通过工具类获取ip地址
+//通过工具类获取ip地址
                 String ip = IPUtil.getIpAddr(request);
                 log.setIp(ip);
-//        获取当前用户name
+//  获取当前用户name
                 log.setUsername(super.getCurrentUser().getUsername());
-//        通过IP定位的jar获取登录地址
+//  通过IP定位的jar获取登录地址
                 log.setLocation(AddressUtil.getAddress(ip));
-//        登录时间
+//  登录时间
                 log.setCreateTime(new Date());
-//        获取请求标识 UA
+//  获取请求标识 UA
                 String header = request.getHeader("User-Agent");
                 UserAgent userAgent = UserAgent.parseUserAgentString(header);
-//        浏览器类型
+//  浏览器类型
                 Browser browser = userAgent.getBrowser();
-//        系统
+//  系统
                 OperatingSystem operatingSystem = userAgent.getOperatingSystem();
                 log.setDevice(browser.getName() + " -- " + operatingSystem.getName());
                 loginLogService.saveLog(log);

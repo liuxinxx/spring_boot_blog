@@ -33,6 +33,7 @@ public class ResponseCode {
     return new ResponseCode(StatusEnums.SUCCESS);
   }
 
+
   public static ResponseCode success(Object data) {
     return new ResponseCode(StatusEnums.SUCCESS, data);
   }

@@ -21,12 +21,12 @@ var app = new Vue({
         sidebarFlag: ' openSidebar ', //侧边栏标志
     },
     created() {
-        window.onload = function() {
+        window.onload = function () {
             app.changeDiv();
-        }
-        window.onresize = function() {
+        };
+        window.onresize = function () {
             app.changeDiv();
-        }
+        };
         this.init(); //初始化
     },
     mounted() {
@@ -106,4 +106,3 @@ var app = new Vue({
         }
     },
 });
-

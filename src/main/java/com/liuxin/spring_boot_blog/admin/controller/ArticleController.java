@@ -33,10 +33,6 @@ public class ArticleController {
         Article article = articleService.findById(id);
         if (article.getId() != 0) {
             List<String> tags = new ArrayList<>();
-//            List<Tags> tagList = articleTagService.findByArticleId(article.getId());
-//            tagList.forEach(t -> {
-//                tags.add(t.getName());
-//            });
             article.setTags(JSON.toJSONString(tags));
             return ResponseCode.success(article);
         } else {

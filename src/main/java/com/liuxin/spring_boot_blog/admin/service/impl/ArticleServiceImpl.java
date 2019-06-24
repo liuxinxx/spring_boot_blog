@@ -21,7 +21,6 @@ public class ArticleServiceImpl extends BaseServiceImpl<Article> implements Arti
     @Override
     public Article findById(Long id) {
         Article article = new Article();
-        //  判断id是否为空
         if (id.equals(null) && id != 0) {
             article = articleMapper.selectByPrimaryKey(id);
         }

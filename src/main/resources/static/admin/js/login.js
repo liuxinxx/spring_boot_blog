@@ -4,7 +4,7 @@ const api = {
     login: '/admin/login'
 };
 // Vue实例
-new Vue({
+var app = new Vue({
     el: '#app',
     data() {
         return {
@@ -50,7 +50,7 @@ new Vue({
                     }).then(result => {
                         if (result.body.code === 200
                         ) {
-                            window.location.href = "/admin";
+                            // window.location.href = "/admin";
                             this.loading.close(); //关闭动画加载
                         }
                         else {

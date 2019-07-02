@@ -19,6 +19,7 @@ var app = new Vue({
         mobileStatus: false, //是否是移动端
         sidebarStatus: true, //侧边栏状态，true：打开，false：关闭
         sidebarFlag: ' openSidebar ', //侧边栏标志
+        isCollapse: true
     },
     created() {
         window.onload = function () {
@@ -33,7 +34,12 @@ var app = new Vue({
         this.$refs.loader.style.display = 'none';
     },
     methods: {
-
+        handleOpen(key, keyPath) {
+            console.log(key, keyPath);
+        },
+        handleClose(key, keyPath) {
+            console.log(key, keyPath);
+        },
         /**
          * 一些初始化参数
          */

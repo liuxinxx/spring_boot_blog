@@ -1,19 +1,22 @@
-body{
+body {
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
-    font-family: Helvetica Neue,Helvetica,PingFang SC,Hiragino Sans GB,Microsoft YaHei,Arial,sans-serif;
+    font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
     margin: 0;
     padding: 0;
 }
+
 .app-main {
     /*50 = navbar  */
     min-height: calc(100vh - 50px);
     position: relative;
     overflow: hidden;
 }
-h2,h3{
+
+h2, h3 {
     color: #443d3d
 }
+
 .page-loader {
     width: 100%;
     height: 100%;
@@ -26,11 +29,13 @@ h2,h3{
     justify-content: center;
     display: flex;
 }
+
 .page-loader__spinner {
     position: relative;
     width: 50px;
     height: 50px;
 }
+
 .page-loader__spinner svg {
     animation: rotate 2s linear infinite;
     transform-origin: center center;
@@ -40,12 +45,14 @@ h2,h3{
     top: 0;
     left: 0;
 }
+
 .page-loader__spinner svg circle {
     stroke-dasharray: 1, 200;
     stroke-dashoffset: 0;
     animation: dash 1.5s ease-in-out infinite, color 6s ease-in-out infinite;
     stroke-linecap: round;
 }
+
 @keyframes dash {
     0% {
         stroke-dasharray: 1, 200;
@@ -60,6 +67,7 @@ h2,h3{
         stroke-dashoffset: -124px;
     }
 }
+
 @keyframes color {
     100%,
     0% {
@@ -76,6 +84,7 @@ h2,h3{
         stroke: #ffc107;
     }
 }
+
 .fade-enter-active,
 .fade-leave-active {
     -webkit-transition: opacity .28s;
@@ -232,15 +241,15 @@ h2,h3{
     overflow: hidden
 }
 
-#app .hideSidebar .el-submenu>.el-submenu__title {
+#app .hideSidebar .el-submenu > .el-submenu__title {
     padding-left: 10px !important
 }
 
-#app .hideSidebar .el-submenu>.el-submenu__title .el-submenu__icon-arrow {
+#app .hideSidebar .el-submenu > .el-submenu__title .el-submenu__icon-arrow {
     display: none
 }
 
-#app .hideSidebar .el-menu--collapse .el-submenu>.el-submenu__title>span {
+#app .hideSidebar .el-menu--collapse .el-submenu > .el-submenu__title > span {
     display: inline-block;
     height: 0;
     overflow: hidden;
@@ -249,13 +258,13 @@ h2,h3{
 }
 
 #app .sidebar-container .el-submenu .el-menu-item,
-#app .sidebar-container .nest-menu .el-submenu>.el-submenu__title {
+#app .sidebar-container .nest-menu .el-submenu > .el-submenu__title {
     background-color: #1f2d3d !important;
     min-width: 180px !important
 }
 
 #app .sidebar-container .el-submenu .el-menu-item:hover,
-#app .sidebar-container .nest-menu .el-submenu>.el-submenu__title:hover {
+#app .sidebar-container .nest-menu .el-submenu > .el-submenu__title:hover {
     background-color: #001528 !important
 }
 
@@ -349,8 +358,8 @@ a:hover {
     min-height: 100%
 }
 
-.el-header{
-    padding:0;
+.el-header {
+    padding: 0;
 }
 
 .app-container {
@@ -393,7 +402,7 @@ a:hover {
     line-height: 50px
 }
 
-.el-menu-item:focus, .el-menu-item:hover{
+.el-menu-item:focus, .el-menu-item:hover {
     background-color: rgb(38, 52, 69) !important;
 }
 

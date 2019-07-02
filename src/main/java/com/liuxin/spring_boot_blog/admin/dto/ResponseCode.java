@@ -41,4 +41,8 @@ public class ResponseCode {
   public static ResponseCode error() {
     return new ResponseCode(StatusEnums.SYSTEM_ERROR);
   }
+  public static ResponseCode error(String msg) {
+    return new ResponseCode(StatusEnums.SUCCESS,msg);
+  }
+
 }

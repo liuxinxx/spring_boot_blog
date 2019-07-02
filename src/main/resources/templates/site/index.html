@@ -4,9 +4,52 @@
 <title>TyCoding&#39;s blog</title>
 <body class="bg-grey" gtools_scp_screen_capture_injected="true">
 <div class="main-content index-page clearfix ">
-    <div class="lists-navigator clearfix" style="min-height: 400px;">
+    <div class="post-lists">
+        <div class="post-lists-body">
+            <div class="post-list-item" th:each="article : ${list.data}">
+                <div class="post-list-item-container">
+                    <div class="item-thumb bg-green" th:if="${article.cover != null}"
+                         th:style="'background-image:url(' + ${article.cover} + ');'"></div>
+                    <a th:href="'/article/' + ${article.id}">
+                        <div class="item-desc">
+                            <p>[[${article.title}]]</p>
+                        </div>
+                    </a>
+                    <div class="item-slant reverse-slant bg-green"></div>
+                    <div class="item-slant"></div>
+                    <div class="item-label">
+                        <div class="item-title">
+                            <a th:href="'/article/' + ${article.id}" th:text="${article.title}"></a>
+                        </div>
+                        <div class="item-meta clearfix">
+                            <div class="item-meta-ico bg-ico-note"
+                                 style="background: url(/public/bg-ico.png) no-repeat;background-size: 40px auto;"></div>
+                            <div class="item-meta-cat">
+                                <a th:href="'/category/' + ${article.category}" th:text="${article.category}"></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="lists-navigator clearfix" th:if="${list.total != 0}">
+        <ol class="page-navigator">
+            <li class="prev" th:if="${pageCode} gt '1'">
+                <a th:href="'/page/' + ${pageCode < 1 ? pageCode : pageCode-1}">←</a>
+            </li>
+            <li th:each="i : ${#numbers.sequence(1, list.total)}">
+                <a th:style="${i == pageCode ? 'color: #eb5055;' : ''}" th:href="'/page/' + ${i}" th:text="${i}"></a>
+            </li>
+            <li class="next" th:if="${pageCode < list.total}">
+                <a th:href="'/page/' + ${pageCode < list.total ? pageCode+1 : list.total}">→</a>
+            </li>
+        </ol>
+    </div>
+    <div th:if="${list.total == 0}" class="lists-navigator clearfix" style="min-height: 400px;">
         还没有发布文章诶！
     </div>
 </div>
+
 </body>
 </html>

@@ -4,7 +4,7 @@ const api = {
     login: '/admin/login'
 };
 // Vue实例
-var app = new Vue({
+new Vue({
     el: '#app',
     data() {
         return {
@@ -16,6 +16,7 @@ var app = new Vue({
             },
             flag: true,
             loading: {}, //loading动画
+            status: false
         };
     },
     mounted() {
@@ -34,15 +35,16 @@ var app = new Vue({
             setTimeout(() => {
                     this.loading.close();
                 },
-                200
+                2000
             )
             ;
         },
         submitForm(login) {
             this.$refs[login].validate((valid) => {
                 if (valid) {
-                    this.loadings(); //加载动画
+                    // this.loadings(); //加载动画
                     //提交表单
+                    this.status = true;
                     this.$http.post(api.login, {
                         username: this.login.username,
                         password: this.login.password,
@@ -50,8 +52,10 @@ var app = new Vue({
                     }).then(result => {
                         if (result.body.code === 200
                         ) {
-                            // window.location.href = "/admin";
-                            this.loading.close(); //关闭动画加载
+                            //  去掉加载动画
+                            this.status = false;
+                            window.location.href = "/admin";
+                            // this.loading.close(); //关闭动画加载
                         }
                         else {
                             // 弹出错误信息框

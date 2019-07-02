@@ -1,6 +1,6 @@
 //设置全局表单提交格式
 Vue.http.options.emulateJSON = true;
-const {body} = document;
+const { body } = document;
 const WIDTH = 1024;
 const RATIO = 3;
 const api = {
@@ -12,7 +12,7 @@ const api = {
         commentsCount: '/comments/findAllCount',
         tagsCount: '/tags/findAllCount',
         linksCount: '/links/findAllCount',
-        allArticle: '/article/findAll',
+        allArticle: '/article/all',
         allComments: '/comments/findAll'
     },
     edit: {

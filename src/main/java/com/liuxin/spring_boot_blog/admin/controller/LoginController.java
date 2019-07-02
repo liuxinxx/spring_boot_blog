@@ -110,6 +110,7 @@ public class LoginController extends BaseController {
                 log.setDevice(browser.getName() + " -- " + operatingSystem.getName());
                 loginLogService.saveLog(log);
                 model.addAttribute("username", getSubject().getPrincipal());
+                Thread.sleep(1000);
                 return ResponseCode.success();
 
             } catch (Exception e) {

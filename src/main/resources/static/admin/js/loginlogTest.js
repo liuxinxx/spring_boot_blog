@@ -3,7 +3,9 @@ let app = new Vue({
     data: {
         defaultActive: '12',
         list: [], //用户列表数据
-        searchEntity: {}, //查询实体类
+        searchEntity: {
+
+        }, //查询实体类
         loading: true,
         //分页选项
         pageConf: {
@@ -23,11 +25,10 @@ let app = new Vue({
     created() {
         window.onload = function () {
             app.changeDiv();
-        }
+        };
         window.onresize = function () {
             app.changeDiv();
-        }
-
+        };
         this.search(this.pageConf.pageCode, this.pageConf.pageSize);
     },
     mounted() {
@@ -42,12 +43,13 @@ let app = new Vue({
         },
         //获取用户列表
         search(pageCode, pageSize) {
-            console.log('1231231312');
+            console.log("搜索按钮");
             this.loading = true;
             if (this.searchEntity.timeField != null) {
                 var timeField = this.searchEntity.timeField[0] + "," + this.searchEntity.timeField[1];
                 this.searchEntity.timeField = timeField;
             }
+            console.log(this.searchEntity);
             this.$http.post(api.monitor.loginlog.list(pageCode, pageSize), this.searchEntity).then(response => {
                 this.list = response.body.data.rows;
                 this.pageConf.totalPage = response.body.data.total;
@@ -105,8 +107,7 @@ let app = new Vue({
 
         //触发导出按钮
         handleExcel() {
-            console.log("导出按钮");
-            this._notify("asdasdasd", "success")
+            this._notify('触发导出按钮', 'success')
         },
 
         /**

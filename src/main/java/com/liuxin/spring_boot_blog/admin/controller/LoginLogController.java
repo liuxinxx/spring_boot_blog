@@ -7,12 +7,10 @@ import com.liuxin.spring_boot_blog.admin.entity.LoginLog;
 import com.liuxin.spring_boot_blog.admin.exception.GlobalException;
 import com.liuxin.spring_boot_blog.admin.service.LoginLogService;
 import com.liuxin.spring_boot_blog.common.controller.BaseController;
+import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -30,12 +28,13 @@ public class LoginLogController extends BaseController {
 
     @PostMapping("/list")
     public ResponseCode findByPage(QueryPage queryPage, LoginLog loginLog) {
-        return ResponseCode.success(super.selectByPageNumSize(queryPage, () -> loginLogService.findByPage(loginLog)));
+        return ResponseCode.success(super.selectByPageNumSize(queryPage,
+                () -> loginLogService.findByPage(loginLog)));
     }
 
     @Log("删除登录日志")
-    @PostMapping("/delete")
-    @RequiresPermissions("loginlog:list")
+    @DeleteMapping("/delete")
+    @RequiresAuthentication
     public ResponseCode delete(@RequestBody List<Long> ids) {
         try {
             loginLogService.delete(ids);

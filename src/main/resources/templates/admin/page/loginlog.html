@@ -31,12 +31,13 @@
                             </el-input>
                         </el-col>
                         <el-col :xs="24" :sm="12" :lg="6" :span="9">
-                            <el-date-picker size="small" value-format="yyyy-MM-dd HH:mm:ss"
-                                            v-model="searchEntity.timeField"
+                            <el-date-picker size="small" value-format="yyyy-MM-dd"
+                                            v-model="searchEntity.filedTime"
                                             type="daterange"
                                             range-separator="至"
                                             start-placeholder="开始日期"
-                                            end-placeholder="结束日期">
+                                            end-placeholder="结束日期"
+                                            :picker-options="pickerOptions">
                             </el-date-picker>
                         </el-col>
                         <el-col :xs="24" :sm="12" :lg="6" :span="1">
@@ -91,5 +92,5 @@
 
 </body>
 <div th:replace="admin/common/js"></div>
-<script type="text/javascript" th:src="@{/admin/js/loginlogTest.js}"></script>
+<script type="text/javascript" th:src="@{/admin/js/loginlog.js}"></script>
 </html>

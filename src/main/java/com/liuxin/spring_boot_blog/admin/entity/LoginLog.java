@@ -34,4 +34,5 @@ public class LoginLog implements Serializable {
 
     @Transient
     private String filedTime;
+
 }

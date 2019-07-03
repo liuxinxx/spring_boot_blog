@@ -19,6 +19,33 @@ let app = new Vue({
         sidebarStatus: true, //侧边栏状态，true：打开，false：关闭
         sidebarFlag: ' openSidebar ', //侧边栏标志
         dialogVisible: false,
+        pickerOptions: {
+            shortcuts: [{
+                text: '最近一周',
+                onClick(picker) {
+                    const end = new Date();
+                    const start = new Date();
+                    start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+                    picker.$emit('pick', [start, end]);
+                }
+            }, {
+                text: '最近一个月',
+                onClick(picker) {
+                    const end = new Date();
+                    const start = new Date();
+                    start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+                    picker.$emit('pick', [start, end]);
+                }
+            }, {
+                text: '最近三个月',
+                onClick(picker) {
+                    const end = new Date();
+                    const start = new Date();
+                    start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
+                    picker.$emit('pick', [start, end]);
+                }
+            }]
+        }
     },
     created() {
         window.onload = function () {
@@ -42,11 +69,10 @@ let app = new Vue({
         },
         //获取用户列表
         search(pageCode, pageSize) {
-            console.log('1231231312');
             this.loading = true;
-            if (this.searchEntity.timeField != null) {
-                var timeField = this.searchEntity.timeField[0] + "," + this.searchEntity.timeField[1];
-                this.searchEntity.timeField = timeField;
+            if (this.searchEntity.filedTime != null) {
+                var filedTime = this.searchEntity.filedTime[0] + "," + this.searchEntity.filedTime[1];
+                this.searchEntity.filedTime = filedTime;
             }
             this.$http.post(api.monitor.loginlog.list(pageCode, pageSize), this.searchEntity).then(response => {
                 this.list = response.body.data.rows;
@@ -88,8 +114,8 @@ let app = new Vue({
                 cancelButtonText: '取消',
                 type: 'warning'
             }).then(() => {
-                this.$http.post(api.monitor.loginlog.delete, JSON.stringify(this.selectIds)).then(response => {
-                    if (response.body.code == 200) {
+                this.$http.delete(api.monitor.loginlog.delete, { body: JSON.stringify(this.selectIds) }).then(response => {
+                    if (response.body.code === 200) {
                         this._notify('删除成功', 'success')
                     } else {
                         this._notify(response.body.msg, 'error')

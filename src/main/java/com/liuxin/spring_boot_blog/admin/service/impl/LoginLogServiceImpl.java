@@ -31,8 +31,8 @@ public class LoginLogServiceImpl extends BaseServiceImpl<LoginLog> implements Lo
             }
             if (StringUtils.isNotBlank(log.getFiledTime())) {
                 String[] split = log.getFiledTime().split(",");
-                criteria.andCondition("data_format(CREATE_TIME, '%Y-%m-%d') >=", split[0]);
-                criteria.andCondition("data_format(CREATE_TIME, '%Y-%m-%d') <=", split[1]);
+                criteria.andCondition("date_format(create_time, '%Y-%m-%d') >=", split[0]);
+                criteria.andCondition("date_format(create_time, '%Y-%m-%d') <=", split[1]);
             }
             example.setOrderByClause("create_time desc");
             return this.selectByExample(example);

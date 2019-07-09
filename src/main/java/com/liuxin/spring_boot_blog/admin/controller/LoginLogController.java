@@ -35,6 +35,7 @@ public class LoginLogController extends BaseController {
     @Log("删除登录日志")
     @DeleteMapping("/delete")
     @RequiresAuthentication
+    @RequiresPermissions("user")
     public ResponseCode delete(@RequestBody List<Long> ids) {
         try {
             loginLogService.delete(ids);

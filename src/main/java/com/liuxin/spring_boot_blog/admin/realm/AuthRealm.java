@@ -2,8 +2,10 @@ package com.liuxin.spring_boot_blog.admin.realm;
 
 import com.liuxin.spring_boot_blog.admin.entity.User;
 import com.liuxin.spring_boot_blog.admin.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
@@ -14,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @date 2019/6/21 11:04
  * @desc
  */
+
+@Slf4j
 public class AuthRealm extends AuthorizingRealm {
 
     @Autowired
@@ -27,7 +31,15 @@ public class AuthRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-        return null;
+        SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
+        info.addRole("user");
+        info.addStringPermission("user");
+        log.info("---------------- 用户身份 ----------------");
+        log.info(info.getRoles().toString());
+        log.info("---------------- 获取到以下权限 ----------------");
+        log.info(info.getStringPermissions().toString());
+        log.info("---------------- Shiro 权限获取成功 ----------------------");
+        return info;
     }
 
     /**

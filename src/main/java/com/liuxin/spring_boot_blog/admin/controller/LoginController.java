@@ -9,6 +9,7 @@ import com.liuxin.spring_boot_blog.admin.service.UserService;
 import com.liuxin.spring_boot_blog.admin.utils.AddressUtil;
 import com.liuxin.spring_boot_blog.admin.utils.HttpContextUtil;
 import com.liuxin.spring_boot_blog.admin.utils.IPUtil;
+import com.liuxin.spring_boot_blog.admin.utils.JWTUtil;
 import com.liuxin.spring_boot_blog.common.controller.BaseController;
 import eu.bitwalker.useragentutils.Browser;
 import eu.bitwalker.useragentutils.OperatingSystem;
@@ -20,13 +21,12 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 
 @Controller
@@ -56,7 +56,7 @@ public class LoginController extends BaseController {
     private LoginLogService loginLogService;
 
     @ResponseBody
-    @RequestMapping("/admin/login")
+    @PostMapping("/admin/login")
     public ResponseCode login(Model model,
                               @RequestParam(value = "username", required = false) String username,
                               @RequestParam(value = "password", required = false) String password,
@@ -111,8 +111,10 @@ public class LoginController extends BaseController {
                 loginLogService.saveLog(log);
                 model.addAttribute("username", getSubject().getPrincipal());
                 //  等待一秒
-                Thread.sleep(1000);
-                return ResponseCode.success();
+                Map map = new HashMap();
+                map.put("JWTToken", JWTUtil.encode(getSubject().getPrincipal().toString()));
+//                Thread.sleep(1000);
+                return ResponseCode.success(map);
 
             } catch (Exception e) {
                 e.printStackTrace();

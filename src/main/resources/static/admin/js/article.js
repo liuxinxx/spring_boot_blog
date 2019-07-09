@@ -31,12 +31,12 @@ var app = new Vue({
         sidebarFlag: ' openSidebar ', //侧边栏标志
     },
     created() {
-        window.onload = function() {
+        window.onload = function () {
             app.changeDiv();
-        }
-        window.onresize = function() {
+        };
+        window.onresize = function () {
             app.changeDiv();
-        }
+        };
         this.search(this.pageConf.pageCode, this.pageConf.pageSize);
     },
     mounted() {
@@ -55,7 +55,7 @@ var app = new Vue({
         },
         //条件查询
         search(pageCode, pageSize) {
-            this.$http.post(api.article.findByPage(pageSize,pageCode), this.searchEntity).then(result => {
+            this.$http.post(api.article.findByPage(pageSize, pageCode), this.searchEntity).then(result => {
                 this.article = result.body.data.rows;
                 this.pageConf.totalPage = result.body.data.total;
             });

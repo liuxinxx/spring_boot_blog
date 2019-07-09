@@ -35,9 +35,16 @@ public class BaseServiceImpl<T> implements BaseService<T> {
         mapper.insert(entity);
     }
 
+//    @Override
+//    public void delete(Object key) {
+//        mapper.deleteByPrimaryKey(key);
+//    }
+
     @Override
-    public void delete(Object key) {
-        mapper.deleteByPrimaryKey(key);
+    public int delete(Object key) {
+        // deleteByPrimaryKey 根据主键删除
+        int count = mapper.deleteByPrimaryKey(key);
+        return count;
     }
 
     @Override

@@ -19,7 +19,7 @@ const api = {
         findById(id) {
             return '/article/findById?id=' + id
         },
-        save: '/article/save',
+        save: '/article',
         update: '/article/update',
         allCategory: '/category/findAll',
     },

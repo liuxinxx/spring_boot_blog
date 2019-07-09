@@ -10,7 +10,7 @@
                 <div class="post-list-item-container">
                     <div class="item-thumb bg-green" th:if="${article.cover != null}"
                          th:style="'background-image:url(' + ${article.cover} + ');'"></div>
-                    <a th:href="'/article/' + ${article.id}">
+                    <a th:href="'/articles/' + ${article.id}">
                         <div class="item-desc">
                             <p>[[${article.title}]]</p>
                         </div>

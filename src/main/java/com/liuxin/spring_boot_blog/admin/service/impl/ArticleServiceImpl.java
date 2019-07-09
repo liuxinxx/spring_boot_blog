@@ -32,6 +32,17 @@ public class ArticleServiceImpl extends BaseServiceImpl<Article> implements Arti
     private ArticleMapper articleMapper;
 
     @Override
+    public int delete(Long id) {
+        try {
+            int count = super.delete(id);
+            return count;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
+    @Override
     public Article findById(Long id) {
         Article article = new Article();
         if (!id.equals(null) && id != 0) {

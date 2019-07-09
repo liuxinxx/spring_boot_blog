@@ -1,9 +1,9 @@
 package com.liuxin.spring_boot_blog.admin.config;
 
+import com.liuxin.spring_boot_blog.admin.filter.JWTShiroFilter;
 import com.liuxin.spring_boot_blog.admin.realm.AuthRealm;
+import com.liuxin.spring_boot_blog.admin.realm.JwtAuthRealm;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
-import org.apache.shiro.cache.CacheManager;
-import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.codec.Base64;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.realm.Realm;
@@ -21,8 +21,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import javax.servlet.Filter;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+
 
 /**
  * @author liuxin
@@ -37,7 +41,8 @@ public class ShiroConfig {
     @Bean
     public SecurityManager securityManager() {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
-        securityManager.setRealm(userRealm(hashedCredentialsMatcher()));
+//        securityManager.setRealm(userRealm(hashedCredentialsMatcher()));
+        securityManager.setRealms(Arrays.asList(new JwtAuthRealm(), userRealm(hashedCredentialsMatcher())));
         return securityManager;
     }
 
@@ -47,6 +52,7 @@ public class ShiroConfig {
         authRealm.setCredentialsMatcher(hashedCredentialsMatcher);
         return authRealm;
     }
+
 
     @Bean
     public SimpleCookie rememberMeCookie() {
@@ -78,10 +84,10 @@ public class ShiroConfig {
         return authorizationAttributeSourceAdvisor;
     }
 
-    @Bean
-    public CacheManager cacheManager() {
-        return new EhCacheManager();
-    }
+//    @Bean
+//    public CacheManager cacheManager() {
+//        return new EhCacheManager();
+//    }
 
     @Bean
     public SessionDAO sessionDAO() {
@@ -108,7 +114,10 @@ public class ShiroConfig {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
 
         shiroFilterFactoryBean.setSecurityManager(securityManager);
-
+        // 添加自己的过滤器并且取名为jwt
+        Map<String, Filter> filterMap = new HashMap<>();
+        filterMap.put("JWTShiroFilter", new JWTShiroFilter());
+        shiroFilterFactoryBean.setFilters(filterMap);
         shiroFilterFactoryBean.setLoginUrl("/login");
 
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
@@ -130,7 +139,7 @@ public class ShiroConfig {
 
         filterChainDefinitionMap.put("/login", "anon");
         filterChainDefinitionMap.put("/admin/login", "anon");
-
+        filterChainDefinitionMap.put("/api/**", "JWTShiroFilter");
         filterChainDefinitionMap.put("/admin/**", "user");
 
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);

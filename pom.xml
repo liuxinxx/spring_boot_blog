@@ -192,7 +192,14 @@
             <artifactId>springfox-swagger-ui</artifactId>
             <version>2.6.1</version>
         </dependency>
-
+        <!--api文档自动生成 end-->
+        <!--jjwt 用于解码和编码Token-->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>0.9.1</version>
+        </dependency>
+        <!--jwt end-->
     </dependencies>
 
     <build>

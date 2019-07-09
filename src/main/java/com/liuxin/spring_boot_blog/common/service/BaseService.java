@@ -1,7 +1,5 @@
 package com.liuxin.spring_boot_blog.common.service;
 
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 
@@ -12,7 +10,7 @@ public interface BaseService<T> {
 
     void save(T entity);
 
-    void delete(Object key);
+    int delete(Object key);
 
     void batchDelete(List<Long> ids, String property, Class<T> clazz);
 

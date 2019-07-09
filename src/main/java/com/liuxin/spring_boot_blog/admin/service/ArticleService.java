@@ -29,4 +29,11 @@ public interface ArticleService extends BaseService<Article> {
      * @return
      */
     Map<String, Object> findByPageForSite(int pageCode, int pageSize);
+
+    /**
+     * 文章删除
+     *
+     * @param id
+     */
+    int delete(Long id);
 }

@@ -200,6 +200,21 @@
             <version>0.9.1</version>
         </dependency>
         <!--jwt end-->
+
+        <!--微信-->
+        <dependency>
+            <groupId>io.github.biezhi</groupId>
+            <artifactId>wechat-api</artifactId>
+            <version>1.0.6</version>
+        </dependency>
+
+        <!-- http 客户端 -->
+        <dependency>
+            <groupId>commons-httpclient</groupId>
+            <artifactId>commons-httpclient</artifactId>
+            <version>3.1</version>
+        </dependency>
+
     </dependencies>
 
     <build>
